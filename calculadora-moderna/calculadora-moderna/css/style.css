@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Calculadora Moderna – estilos
+   ========================================================================== */
+
+:root {
+  --bg: #0a0a0e;
+  --card-top: #1a1b24;
+  --card-bottom: #111218;
+  --key: #20212b;
+  --key-hover: #292a36;
+  --key-function: #17181f;
+  --key-function-hover: #20212a;
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #eceaf4;
+  --text-muted: #8f8da1;
+  --accent: #7c6cff;
+  --accent-soft: #b2a8ff;
+  --accent-blue: #4f8bff;
+  --danger: #ff8a9b;
+
+  --radius-card: 32px;
+  --radius-key: 20px;
+  --gap: 12px;
+
+  --font: "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui,
+    -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(900px 500px at 50% -10%, rgba(124, 108, 255, 0.18), transparent 70%),
+    var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 20px 14px;
+}
+
+/* ---------- Cartão da calculadora ---------- */
+
+.calculator {
+  width: min(100%, 400px);
+  padding: 22px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(160deg, var(--card-top), var(--card-bottom));
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 30px 60px -20px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Display ---------- */
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  min-height: 132px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
+  text-align: right;
+  overflow: hidden;
+}
+
+.display__expression {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.display__result {
+  display: block;
+  font-size: clamp(2.6rem, 11vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.display__result.is-error {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.3;
+  white-space: normal;
+  color: var(--danger);
+}
+
+/* ---------- Teclado ---------- */
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.key {
+  min-height: clamp(54px, 9.5vh, 72px);
+  padding: 0;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--key);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-key);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 6px 12px -6px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.key:hover {
+  background: var(--key-hover);
+}
+
+.key:active,
+.key.is-pressed {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+}
+
+/* Funções (AC, DEL, %, ±): mais discretas */
+.key--function {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--key-function);
+}
+
+.key--function:hover {
+  background: var(--key-function-hover);
+  color: var(--text);
+}
+
+/* Operadores: tom do acento */
+.key--operator {
+  font-size: 1.8rem;
+  color: var(--accent-soft);
+  background: rgba(124, 108, 255, 0.12);
+  border-color: rgba(124, 108, 255, 0.28);
+}
+
+.key--operator:hover {
+  background: rgba(124, 108, 255, 0.2);
+}
+
+.key--operator.is-active {
+  color: #fff;
+  background: rgba(124, 108, 255, 0.55);
+  border-color: rgba(178, 168, 255, 0.7);
+}
+
+/* Igual: o destaque principal */
+.key--equals {
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent));
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 10px 24px -8px rgba(124, 108, 255, 0.7);
+}
+
+.key--equals:hover {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent));
+  filter: brightness(1.12);
+}
+
+/* ---------- Telas pequenas ---------- */
+
+@media (max-width: 380px) {
+  .calculator {
+    padding: 16px;
+  }
+
+  .keypad {
+    --gap: 10px;
+  }
+
+  .key {
+    font-size: 1.3rem;
+    border-radius: 16px;
+  }
+}
+
+/* Celulares na horizontal ou telas muito baixas */
+@media (max-height: 600px) {
+  .app {
+    padding: 10px;
+  }
+
+  .display {
+    min-height: 90px;
+    margin-bottom: 12px;
+    padding: 10px 16px;
+  }
+
+  .keypad {
+    --gap: 8px;
+  }
+
+  .key {
+    min-height: 44px;
+  }
+}
+
+/* Tablets e computadores */
+@media (min-width: 768px) {
+  .calculator {
+    width: 420px;
+  }
+}
+
+/* ---------- Acessibilidade: menos movimento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .key:active,
+  .key.is-pressed {
+    transform: none;
+  }
+}
